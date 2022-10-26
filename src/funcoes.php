@@ -84,7 +84,19 @@ class Funcoes
 
      * */
     public function SegundoMaior(array $arr): int {
-        
+        $primeiroMaior = null;
+        $segundoMaior = null;
+        foreach($arr as $a){
+            foreach($a as $item){
+                if($item >= $primeiroMaior){
+                    $segundoMaior = $primeiroMaior;
+                    $primeiroMaior = $item;
+                }else if($item >= $segundoMaior){
+                    $segundoMaior = $item;
+                }
+            }
+        }
+        return $segundoMaior;
     }
 	
 	
