@@ -136,7 +136,43 @@ class Funcoes
 
      * */
     
-	// public function SequenciaCrescente(array $arr): boolean {
-        
-    // }
+	public function SequenciaCrescente(array $arr): bool {
+        $remocoes = 0;
+        for($i = 1; $i < count($arr) - 1; $i++){
+            if($this->tresNumerosIguais($arr, $i) || $this->tresOrdemDecrescente($arr, $i)){
+                return false;
+            } else if($this->remocaoMeio($arr, $i)){
+                $remocoes++;
+                $arr[$i] = $arr[$i - 1];
+            }  else if($this->remocaoEsquerda($arr, $i)){
+                $remocoes++;
+            } else if($this->remocaoDireita($arr, $i)){
+                $arr[$i + 1] = $arr[$i];
+                $arr[$i] = $arr[$i -1];
+                $remocoes++;
+            }
+            if($remocoes > 1){
+                return false;
+            }
+        }
+        return true;
+    }
+    private function remocaoMeio(array $arr, int $i): bool{
+        return $arr[$i] == $arr[$i - 1] || $arr[$i] == $arr[$i + 1]
+            ||($arr[$i] > $arr[$i - 1] && $arr[$i] > $arr[$i + 1] && $arr[$i - 1] != $arr[$i + 1]) 
+            || ($arr[$i-1] == $arr[$i+1] && $arr[$i]<$arr[$i+1]);
+    }
+    private function remocaoDireita(array $arr, int $i): bool{
+        return $arr[$i] > $arr[$i - 1] && $arr[$i] > $arr[$i + 1] 
+            || ($arr[$i-1] == $arr[$i+1] && $arr[$i]>$arr[$i+1]);
+    }
+    private function remocaoEsquerda(array $arr, int $i): bool{
+        return $arr[$i] < $arr[$i - 1] && $arr[$i] < $arr[$i + 1];
+    }
+    private function tresNumerosIguais(array $arr, int $i): bool{
+        return ($arr[$i] == $arr[$i - 1] && $arr[$i] == $arr[$i + 1]);
+    }
+    private function tresOrdemDecrescente(array $arr, int $i): bool{
+        return ($arr[$i - 1] >= $arr[$i] && $arr[$i] >= $arr[$i + 1]);
+    }
 }
